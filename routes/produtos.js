@@ -3,41 +3,34 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
     res.status(200).send({
-        mensagem: 'usando o get dentro da rota de produtos'
+        mensagem: 'Retorna os produtos'
     });
 });
 
 router.post('/', (req, res, next) => {
     res.status(201).send({
-        mensagem: 'usando o POST dentro da rota de produtos'
+        mensagem: 'Produto foi criado'
     });
 });
 
 router.get('/:id_produto', (req, res, next) => {
     const id = req.params.id_produto
+    res.status(200).send({
+        mensagem: 'Detalhes do produto',
+        id_produto: id
+    });
 
-    if(id == 'especial'){
-        res.status(200).send({
-            mensagem: 'Id especial',
-            id:id
-        });
-    }else{
-        res.status(200).send({
-            mensagem: 'Você passou um Id',
-            id: id
-        });
-    }
 });
 
 router.patch('/', (req, res, next) => {
     res.status(201).send({
-        mensagem: 'Usando o PATCH dentro da rota de produtos'
+        mensagem: 'Alterar produto'
     });
 });
 
 router.delete('/', (req, res, next) => {
     res.status(201).send({
-        mensagem: 'usando o DELETE dentro da rota de produtos'
+        mensagem: 'Produto excluido'
     })
 })
 
