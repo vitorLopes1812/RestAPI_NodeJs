@@ -1,0 +1,22 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "Teste Rest API com NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitorLopes1812/RestAPI_NodeJs.git"
+  },
+  "author": "Vitor de Oliveira Lopes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vitorLopes1812/RestAPI_NodeJs/issues"
+  },
+  "homepage": "https://github.com/vitorLopes1812/RestAPI_NodeJs#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
