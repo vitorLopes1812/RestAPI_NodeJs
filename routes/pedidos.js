@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get("/", (req, res, next) => {
     res.status(200).send({
-        mensagem: 'Retorna os pedidos'
+        mensagem: 'Retorna todos os pedidos'
     });
 });
 
