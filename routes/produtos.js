@@ -1,4 +1,5 @@
 const express = require("express");
+const { prependOnceListener } = require("../app");
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
@@ -8,8 +9,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+    const produto = {
+        nome: req.body.nome,
+        preco: req.body.preco
+    };
+
     res.status(201).send({
-        mensagem: 'Produto foi criado'
+        mensagem: 'Produto foi criado',
+        ProdutoCriado: produto
     });
 });
 

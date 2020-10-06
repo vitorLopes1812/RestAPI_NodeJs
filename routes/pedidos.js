@@ -6,10 +6,15 @@ router.get("/", (req, res, next) => {
         mensagem: 'Retorna todos os pedidos'
     });
 });
-
+//AULA 4 -> 5:55
 router.post("/", (req, res, next) => {
+    const pedido = {
+        id_produto: req.body.id_produto,
+        quantidade: req.body.quantidade
+    }
     res.status(201).send({
-        mensagem: 'Pedido foi criado'
+        mensagem: 'Pedido foi criado',
+        PedidoCriado: pedido
     });
 });
 
