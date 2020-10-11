@@ -1,5 +1,13 @@
 # RestAPI_NodeJs
 
-1 -> npm install
+<h1>Comandos para rodar o projeto</h1>
 
-2 -> npm start
+<h3>Instalação das dependências</h3>
+<ul>     
+    <li><i>npm install</i></li>
+</ul>
+
+<h3>Inicialização do projeto</h3>
+<ul>
+    <li><i>npm start</i></li>
+</ul>
