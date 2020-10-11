@@ -11,3 +11,9 @@
 <ul>
     <li><i>npm start</i></li>
 </ul>
+
+<h1> Banco de dados e especificações </h1>
+
+<p>Foi utilizado um banco de dados MySQL criado a partir de um container docker</p>
+
+<p>Documentação utilizada para baixar a imagem e rodar o container: <a>https://hub.docker.com/_/mariadb</a></p>
