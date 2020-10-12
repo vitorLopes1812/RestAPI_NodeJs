@@ -1,6 +1,6 @@
 # RestAPI_NodeJs
 
-<h1>Comandos para rodar o projeto</h1>
+<h2>Comandos para rodar o projeto</h2>
 
 <h3>Instalação das dependências</h3>
 <ul>     
@@ -12,7 +12,7 @@
     <li><i>npm start</i></li>
 </ul>
 
-<h1> Banco de dados e especificações </h1>
+<h2> Banco de dados e especificações </h2>
 
 <p>Foi utilizado um banco de dados MySQL criado a partir de um container docker.</p>
 
