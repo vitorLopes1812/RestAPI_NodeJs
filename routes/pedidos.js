@@ -6,7 +6,7 @@ router.get("/", (req, res, next) => {
         mensagem: 'Retorna todos os pedidos'
     });
 });
-//AULA 4 -> 5:55
+
 router.post("/", (req, res, next) => {
     const pedido = {
         id_produto: req.body.id_produto,
