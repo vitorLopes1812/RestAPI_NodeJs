@@ -61,13 +61,14 @@ router.get('/:id_produto', (req, res, next) => {
     })
 });
 
+//atualiza os dados de um produto
 router.patch('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if(error){ return res.status(500).send({ error: error })}
         conn.query(
-            ` Update produtos SET
+            `UPDATE produtos SET
                 nome_produto = ?,
-                preco_produto = ?,
+                preco_produto = ?
                 WHERE id_produto = ? `,
                 [
                     req.body.nome_produto,
@@ -76,7 +77,7 @@ router.patch('/', (req, res, next) => {
                 ],
                 (err, resultado, field) => {
                     if(err){return res.status(500).send({ error: err })}
-                    return res.status(200).send({
+                    return res.status(201).send({
                         mensagem: "Produto alterado com sucesso"
                     })
                 }
