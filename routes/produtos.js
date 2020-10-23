@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
             'SELECT * FROM produtos ;',
             (error,result,field) => {
                 if(error){return res.status(500).send({ error: error})};
-                const reponse = {
+                const response = {
                     quantidade: result.length,
                     produtos: result.map(prod => {
                         return{
@@ -53,8 +53,8 @@ router.post('/', (req, res, next) => {
                     mensagem: "Produto inserido com sucesso",
                     produtoCriado: {
                         id_produto: result.id_produto,
-                        nome_produto: result.nome_produto,
-                        preco_produto: result.preco_produto,
+                        nome_produto: req.body.nome_produto,
+                        preco_produto: req.body.preco_produto,
                         request: {
                             tipo: 'GET',
                             descricao: 'Retorna todos os produtos',
