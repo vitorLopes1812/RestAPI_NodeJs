@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const mysql = require("../mysql").pool;
+const multer = require('multer');
 const urlAPI = 'http://localhost:3000/produtos/';
+
+const upload = multer({ dest: 'uploads/' }) //onde os arquicos serão armazenados AULA 10 6:10
 
 //retorna todos os produtos
 router.get('/', (req, res, next) => {
@@ -33,12 +36,8 @@ router.get('/', (req, res, next) => {
 });
 
 //Adiciona um novo produto ao banco de dados
-router.post('/', (req, res, next) => {
-    const produto = {
-        nome: req.body.nome,
-        preco: req.body.preco
-    };
-
+router.post('/', upload.single('produto_imagem'), (req, res, next) => {
+    console.log(req.file);
     mysql.getConnection((error, conn) => {
         if(error){ return res.status(500).send({ error: error }) }
         conn.query(
