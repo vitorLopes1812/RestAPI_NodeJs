@@ -4,7 +4,31 @@ const mysql = require("../mysql").pool;
 const multer = require('multer');
 const urlAPI = 'http://localhost:3000/produtos/';
 
-const upload = multer({ dest: 'uploads/' }) //onde os arquicos serão armazenados AULA 10 6:10
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/'); //configura local de armazenamento
+    },
+    filename: function (req, file, cb) {
+        let data = new Date().toISOString().replace(/:/g, '-') + '-';
+        cb(null, data + file.originalname ); //pega a data em que foi inserido o arquivo + o nome real do arquivo 
+    }
+}); 
+
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
+        cb(null, true);
+    } else {
+        cb(null,false);
+    }
+}
+
+const upload = multer({ 
+    storage: storage ,
+    limits: {
+        fileSize: 1024 * 1024 * 5, //5 Mb limite do arquivo
+        fileFilter: fileFilter
+    }
+});
 
 //retorna todos os produtos
 router.get('/', (req, res, next) => {
@@ -21,6 +45,7 @@ router.get('/', (req, res, next) => {
                             id_produto: prod.id_produto,
                             nome_produto: prod.nome_produto,
                             preco_produto: prod.preco_produto,
+                            produto_imagem: prod.produto_imagem,
                             request: {
                                 tipo: 'GET',
                                 descricao: 'Retorna os detalhes de um produto específico',
@@ -41,8 +66,12 @@ router.post('/', upload.single('produto_imagem'), (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if(error){ return res.status(500).send({ error: error }) }
         conn.query(
-            'INSERT INTO produtos (nome_produto, preco_produto) VALUES (?,?)',
-            [req.body.nome_produto, req.body.preco_produto],
+            'INSERT INTO produtos (nome_produto, preco_produto, produto_imagem) VALUES (?, ?, ?)',
+            [
+                req.body.nome_produto, 
+                req.body.preco_produto,
+                req.file.path
+            ],
             (err, result, field) => {
                 conn.release();
 
@@ -54,6 +83,7 @@ router.post('/', upload.single('produto_imagem'), (req, res, next) => {
                         id_produto: result.id_produto,
                         nome_produto: req.body.nome_produto,
                         preco_produto: req.body.preco_produto,
+                        produto_imagem: req.file.path,
                         request: {
                             tipo: 'GET',
                             descricao: 'Retorna todos os produtos',
@@ -89,6 +119,7 @@ router.get('/:id_produto', (req, res, next) => {
                         id_produto: result[0].id_produto,
                         nome_produto: result[0].nome_produto,
                         preco_produto: result[0].preco_produto,
+                        produto_imagem: result[0].produto_imagem,
                         request: {
                             tipo: 'GET',
                             descricao: 'Retorna todos os produtos',
