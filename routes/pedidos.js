@@ -42,6 +42,7 @@ router.post("/", (req, res, next) => {
                 req.body.id_produto
             ],
             (err, field, result) => {
+                conn.release();
                 if(err){ return res.status(500).send({ error: err })}
                 if(result.length == 0){
                     return res.status(404).send({
@@ -60,6 +61,7 @@ router.post("/", (req, res, next) => {
             (err,field,result) => {
                 conn.release();
                 if(err){ return res.status(500).send({ error: err })}
+                
                 const response = {
                     mensagem: 'Pedido inserido com sucesso',
                     pedidoCriado: {
@@ -89,8 +91,8 @@ router.get("/:id_pedido", (req, res, next) => {
                 req.params.id_pedido
             ],
             (err,result,field) => {
+                conn.release();
                 if(err){return res.status(500).send({ error: err})};
-
                 if(result.length == 0){
                     conn.release(); 
                     return res.status(500).send({ 

@@ -7,9 +7,11 @@ router.post('/cadastro', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if(error){return res.status(500).send({ error: error })}
         //verificar se o email ja está cadastrado
-        conn.query('SELECT * FROM usuarios WHERE email = ?', 
+        conn.query(
+            'SELECT * FROM usuarios WHERE email = ?', 
             [req.body.email],
             (error, result) => {
+                conn.release();
                 if(error){return res.status(500).send({ error: error })}
                 if(result.length > 0){
                     return res.status(409).send({

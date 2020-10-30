@@ -37,7 +37,9 @@ router.get('/', (req, res, next) => {
         conn.query(
             'SELECT * FROM produtos ;',
             (error,result,field) => {
+                conn.release();
                 if(error){return res.status(500).send({ error: error})};
+
                 const response = {
                     quantidade: result.length,
                     produtos: result.map(prod => {
@@ -74,7 +76,6 @@ router.post('/', upload.single('produto_imagem'), (req, res, next) => {
             ],
             (err, result, field) => {
                 conn.release();
-
                 if(err){ return res.status(500).send({ error: err, response: null}) }
 
                 const response = {
@@ -106,6 +107,7 @@ router.get('/:id_produto', (req, res, next) => {
             'SELECT * FROM produtos WHERE id_produto = ?;',
             [req.params.id_produto],
             (err,result,field) => {
+                conn.release();
                 if(err){return res.status(500).send({ error: err})};
 
                 if(result.length == 0){ 
@@ -148,6 +150,7 @@ router.patch('/', (req, res, next) => {
                     req.body.id_produto
                 ],
                 (err, result, field) => {
+                    conn.release();
                     if(err){return res.status(500).send({ error: err })}
 
                     const response = {
