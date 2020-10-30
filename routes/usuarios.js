@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mysql = require('../mysql').pool;
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 router.post('/cadastro', (req, res, next) => {
     mysql.getConnection((error, conn) => {
@@ -53,18 +54,29 @@ router.post('/login', (req, res, next) => {
         conn.query(
             'SELECT * FROM usuarios WHERE email = ?',
             [req.body.email],
-            (err, result, field) => {
+            (err, results, field) => { //esse results recebe o que vem da query (usar nomes diferentes 'results', 'result', 'resultado')
                 conn.release();
                 if(err){return res.status(500).send({ error: err})}
-                if(result.length < 1){
+                if(results.length < 1){
                     return res.status(401).send({ mensagem: 'Falha na autenticação' })
                 }
-                bcrypt.compare(req.body.senha, result[0].senha, (err, result) => {
+                bcrypt.compare(req.body.senha, results[0].senha, (err, result) => {
                     if(err){
                         return res.status(401).send({mensagem: 'Falha na autenticação' })
                     }
                     if(result){
-                        return res.status(200).send({ mensagem: 'Autenticado com sucesso' })
+                        const token = jwt.sign({
+                            id_usuario: results[0].id_usuario,
+                            email: results[0].email
+                        }, 
+                        process.env.JWT_KEY, {
+                            expiresIn: '1h'
+                        });
+
+                        return res.status(200).send({ 
+                            mensagem: 'Autenticado com sucesso',
+                            token: token
+                        });
                     }
                     return res.status(401).send({ mensagem: 'Falha na autenticação '})
                 })
