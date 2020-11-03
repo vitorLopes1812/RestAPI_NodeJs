@@ -41,7 +41,7 @@ router.post('/', login.obrigatorio, upload.single('produto_imagem') ,ProdutosCon
 router.get('/:id_produto', ProdutosController.getProdutoEspecifico);
 
 //atualiza os dados de um produto
-router.patch('/', login.obrigatorio, ProdutosController.patchProduto);
+router.patch('/:id_produto', login.obrigatorio, ProdutosController.patchProduto);
 
 //remove um produto do banco de dados
 router.delete('/:id_produto', login.obrigatorio, ProdutosController.deleteProduto);

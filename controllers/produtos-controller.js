@@ -113,7 +113,7 @@ exports.patchProduto = (req, res, next) => {
                 [
                     req.body.nome_produto,
                     req.body.preco_produto,
-                    req.body.id_produto
+                    req.params.id_produto
                 ],
                 (err, result, field) => {
                     conn.release();
